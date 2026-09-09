@@ -4,6 +4,7 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/rgb.h>
+#include "swedish.dtsi"
 
 / {
     behaviors {
@@ -21,57 +22,6 @@
         };
     };
 
-    macros {
-        swe_aa: swe_aa {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&macro_press>, <&kp LEFT_ALT &kp A>;
-
-            label = "SWE_AA";
-        };
-
-        swe_ae: swe_ae {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_tap>,
-                <&kp LEFT_ALT &kp U>,
-                <&macro_tap>,
-                <&kp A>;
-
-            label = "SWE_AE";
-        };
-
-        swe_oe: swe_oe {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&macro_tap>, <&kp LEFT_ALT &kp U>;
-
-            label = "SWE_OE";
-        };
-
-        swe_aa_2: swe_aa_2 {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LA(A)>;
-            label = "SWE_AA_2";
-        };
-
-        swe_ae_2: swe_ae_2 {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LA(U) &kp A>;
-            label = "SWE_AE_2";
-        };
-
-        swe_oe_2: swe_oe_2 {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LA(U) &kp O>;
-            label = "SWE_OE_2";
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 
@@ -79,20 +29,22 @@
             display-name = "Base";
             bindings = <
 &kp EQUAL  &kp N1     &kp N2    &kp N3    &kp N4     &kp N5  &tog 2                                                               &mo 4            &kp N6  &kp N7  &kp N8     &kp N9    &kp N0    &kp MINUS
-&kp TAB    &kp Q      &kp W     &kp E     &kp R      &kp T   &tog 1                                                               &none            &kp Y   &kp U   &kp I      &kp O     &kp P     &kp BSLH
-&kp ESC    &kp A      &kp S     &kp D     &kp F      &kp G   &kp LEFT_SHIFT  &kp LEFT_GUI  &kp LALT      &kp RCTRL  &kp LEFT_GUI  &kp RIGHT_SHIFT  &kp H   &kp J   &kp K      &kp L     &kp SEMI  &kp SQT
+&kp TAB    &kp Q      &kp W     &kp E     &kp R      &kp T   &none                                                                &none            &kp Y   &kp U   &kp I      &kp O     &kp P     &sw_aa
+&kp ESC    &kp A      &kp S     &kp D     &kp F      &kp G   &kp LEFT_SHIFT  &kp LEFT_GUI  &kp LALT      &kp RCTRL  &kp LEFT_GUI  &kp RIGHT_SHIFT  &kp H   &kp J   &kp K      &kp L     &sw_oe  &sw_ae
 &kp LSHFT  &kp Z      &kp X     &kp C     &kp V      &kp B                                 &kp HOME      &kp PG_UP                                 &kp N   &kp M   &kp COMMA  &kp DOT   &kp FSLH  &kp RSHFT
 &mo 3      &kp GRAVE  &kp CAPS  &kp LEFT  &kp RIGHT          &kp BSPC        &kp DEL       &kp END       &kp PG_DN  &kp ENTER     &kp SPACE                &kp UP  &kp DOWN   &kp LBKT  &kp RBKT  &mo 3
             >;
         };
 
-        swe {
+        // Keep this slot so the existing keypad/Fn/Mod layer numbers stay stable.
+        unused {
+            display-name = "Unused";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans                                      &trans  &trans  &trans  &trans  &trans  &trans     &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans                                      &trans  &trans  &trans  &trans  &trans  &trans     &swe_aa_2
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans  &swe_oe_2  &swe_ae_2
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans      &trans                  &trans  &trans  &trans  &trans  &trans     &trans
-&trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans      &trans  &trans  &trans          &trans  &trans  &trans  &trans     &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
             >;
         };
 
@@ -100,8 +52,8 @@
             display-name = "Kp";
             bindings = <
 &kp EQUAL  &kp N1     &kp N2    &kp N3    &kp N4     &kp N5  &trans                                                          &mo 4      &kp N6  &kp KP_NUM  &kp KP_EQUAL  &kp KP_DIVIDE  &kp KP_MULTIPLY  &kp MINUS
-&kp TAB    &kp Q      &kp W     &kp E     &kp R      &kp T   &none                                                           &none      &kp Y   &kp KP_N7   &kp KP_N8     &kp KP_N9      &kp KP_MINUS     &kp BSLH
-&kp ESC    &kp A      &kp S     &kp D     &kp F      &kp G   &none     &kp LEFT_GUI  &kp LALT      &kp RCTRL  &kp RIGHT_GUI  &none      &kp H   &kp KP_N4   &kp KP_N5     &kp KP_N6      &kp KP_PLUS      &kp SQT
+&kp TAB    &kp Q      &kp W     &kp E     &kp R      &kp T   &none                                                           &none      &kp Y   &kp KP_N7   &kp KP_N8     &kp KP_N9      &kp KP_MINUS     &sw_aa
+&kp ESC    &kp A      &kp S     &kp D     &kp F      &kp G   &none     &kp LEFT_GUI  &kp LALT      &kp RCTRL  &kp RIGHT_GUI  &none      &kp H   &kp KP_N4   &kp KP_N5     &kp KP_N6      &kp KP_PLUS      &sw_ae
 &kp LSHFT  &kp Z      &kp X     &kp C     &kp V      &kp B                           &kp HOME      &kp PG_UP                            &kp N   &kp KP_N1   &kp KP_N2     &kp KP_N3      &kp KP_ENTER     &kp RSHFT
 &mo 3      &kp GRAVE  &kp CAPS  &kp LEFT  &kp RIGHT          &kp BSPC  &kp DEL       &kp END       &kp PG_DN  &kp ENTER      &kp KP_N0          &kp UP      &kp DOWN      &kp KP_DOT     &kp RBKT         &mo 3
             >;

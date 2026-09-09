@@ -1,0 +1,167 @@
+// Swedish letters on macOS U.S. input; both left/right Option and Shift work.
+#include <dt-bindings/zmk/modifiers.h>
+
+#define SW_OPTION (MOD_LALT | MOD_RALT)
+#define SW_SHIFT (MOD_LSFT | MOD_RSFT)
+
+/ {
+    behaviors {
+        // Mask the physically held modifiers on EACH queued keystroke.
+        // Implicit modifiers in LA()/LS() still reach the host. Doing this
+        // inside the macro also works if its trigger was already released.
+        sw_opt_a: sw_opt_a {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LA(A)>, <&kp LA(A)>;
+            mods = <(SW_OPTION | SW_SHIFT)>;
+        };
+
+        sw_opt_shift_a: sw_opt_shift_a {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LA(LS(A))>, <&kp LA(LS(A))>;
+            mods = <(SW_OPTION | SW_SHIFT)>;
+        };
+
+        sw_diaeresis: sw_diaeresis {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LA(U)>, <&kp LA(U)>;
+            mods = <(SW_OPTION | SW_SHIFT)>;
+        };
+
+        sw_a: sw_a {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp A>, <&kp A>;
+            mods = <(SW_OPTION | SW_SHIFT)>;
+        };
+
+        sw_o: sw_o {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp O>, <&kp O>;
+            mods = <(SW_OPTION | SW_SHIFT)>;
+        };
+
+        sw_shift_a: sw_shift_a {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LS(A)>, <&kp LS(A)>;
+            mods = <(SW_OPTION | SW_SHIFT)>;
+        };
+
+        sw_shift_o: sw_shift_o {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LS(O)>, <&kp LS(O)>;
+            mods = <(SW_OPTION | SW_SHIFT)>;
+        };
+
+        // Select Option first, then case. Selectors preserve modifiers;
+        // only the individual keystrokes above mask them.
+        sw_aa: sw_aa {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp BSLH>, <&sw_aa_case>;
+            mods = <SW_OPTION>;
+            keep-mods = <SW_OPTION>;
+        };
+
+        sw_aa_case: sw_aa_case {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&sw_aa_lower>, <&sw_aa_upper>;
+            mods = <SW_SHIFT>;
+            keep-mods = <SW_SHIFT>;
+        };
+
+        sw_oe: sw_oe {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp SEMI>, <&sw_oe_case>;
+            mods = <SW_OPTION>;
+            keep-mods = <SW_OPTION>;
+        };
+
+        sw_oe_case: sw_oe_case {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&sw_oe_lower>, <&sw_oe_upper>;
+            mods = <SW_SHIFT>;
+            keep-mods = <SW_SHIFT>;
+        };
+
+        sw_ae: sw_ae {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp SQT>, <&sw_ae_case>;
+            mods = <SW_OPTION>;
+            keep-mods = <SW_OPTION>;
+        };
+
+        sw_ae_case: sw_ae_case {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&sw_ae_lower>, <&sw_ae_upper>;
+            mods = <SW_SHIFT>;
+            keep-mods = <SW_SHIFT>;
+        };
+
+    };
+
+    macros {
+        // Zero delays keep each masked press/release together in the queue.
+        sw_aa_lower: sw_aa_lower {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <0>;
+            wait-ms = <0>;
+            bindings = <&sw_opt_a>;
+        };
+
+        sw_aa_upper: sw_aa_upper {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <0>;
+            wait-ms = <0>;
+            bindings = <&sw_opt_shift_a>;
+        };
+
+        sw_ae_lower: sw_ae_lower {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <0>;
+            wait-ms = <0>;
+            bindings = <&sw_diaeresis &sw_a>;
+        };
+
+        sw_ae_upper: sw_ae_upper {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <0>;
+            wait-ms = <0>;
+            bindings = <&sw_diaeresis &sw_shift_a>;
+        };
+
+        sw_oe_lower: sw_oe_lower {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <0>;
+            wait-ms = <0>;
+            bindings = <&sw_diaeresis &sw_o>;
+        };
+
+        sw_oe_upper: sw_oe_upper {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <0>;
+            wait-ms = <0>;
+            bindings = <&sw_diaeresis &sw_shift_o>;
+        };
+
+    };
+};
+
+#undef SW_OPTION
+#undef SW_SHIFT
